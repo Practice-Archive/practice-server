@@ -1,0 +1,23 @@
+package practice_server.domain.board.entity;
+
+import jakarta.persistence.*;
+import practice_server.domain.member.entity.Member;
+import practice_server.domain.reply.entity.Reply;
+import practice_server.global.common.BaseTimeEntity;
+
+import java.util.List;
+
+@Entity
+public class Board extends BaseTimeEntity {
+    @Id @GeneratedValue
+    private Long boardId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+    private String title;
+    private String content;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<Reply> replies;
+}
