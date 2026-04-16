@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # mydb 부분은 도커 실행 시 설정한 MYSQL_DATABASE 이름과 일치해야 합니다.

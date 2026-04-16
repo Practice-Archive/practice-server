@@ -1,19 +1,22 @@
 package practice_server.domain.reply.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import practice_server.domain.board.entity.Board;
 import practice_server.domain.member.entity.Member;
 import practice_server.global.common.BaseTimeEntity;
 
 @Entity
 public class Reply extends BaseTimeEntity {
-    @Id
+    @Id @GeneratedValue
     private Long replyId;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
     private Board board;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private Member member;
+
     private String content;
 }
