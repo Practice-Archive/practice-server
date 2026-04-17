@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import practice_server.domain.board.entity.Board;
 import practice_server.domain.board.service.BoardService;
 import practice_server.domain.member.entity.Member;
+import practice_server.domain.member.repository.MemberRepository;
 import practice_server.domain.member.service.MemberService;
 import practice_server.domain.reply.entity.Reply;
 import practice_server.domain.reply.service.ReplyService;
@@ -29,6 +30,7 @@ public class InitDb {
     @RequiredArgsConstructor
     static class InitService {
         private final MemberService memberService;
+        private final MemberRepository memberRepository;
         private final BoardService boardService;
         private final ReplyService replyService;
 
@@ -38,7 +40,7 @@ public class InitDb {
             Reply reply1 = createReply("첫번째 댓글");
             Reply reply2 = createReply("두번째 댓글");
 
-            memberService.join(member);
+            memberRepository.save(member);
             boardService.save(member.getMemberId(), board);
             replyService.save(member.getMemberId(), board.getBoardId(), reply1);
             replyService.save(member.getMemberId(), board.getBoardId(), reply2);
@@ -50,7 +52,7 @@ public class InitDb {
             Reply reply1 = createReply("첫번째 댓글");
             Reply reply2 = createReply("두번째 댓글");
 
-            memberService.join(member);
+            memberRepository.save(member);
             boardService.save(member.getMemberId(), board);
             replyService.save(member.getMemberId(), board.getBoardId(), reply1);
             replyService.save(member.getMemberId(), board.getBoardId(), reply2);
