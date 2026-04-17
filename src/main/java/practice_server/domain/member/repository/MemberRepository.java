@@ -6,7 +6,6 @@ import practice_server.domain.member.entity.Member;
 
 import java.util.List;
 
-@Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findMemberByMemberId(Long memberId);
     boolean existsMemberByNickname(String nickname);
