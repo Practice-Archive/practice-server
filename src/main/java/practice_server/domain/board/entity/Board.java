@@ -1,6 +1,9 @@
 package practice_server.domain.board.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.validation.annotation.Validated;
 import practice_server.domain.member.entity.Member;
 import practice_server.domain.reply.entity.Reply;
 import practice_server.global.common.BaseTimeEntity;
@@ -8,6 +11,7 @@ import practice_server.global.common.BaseTimeEntity;
 import java.util.List;
 
 @Entity
+@Getter @Setter
 public class Board extends BaseTimeEntity {
     @Id @GeneratedValue
     private Long boardId;
