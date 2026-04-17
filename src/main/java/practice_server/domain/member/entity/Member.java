@@ -4,7 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import practice_server.domain.board.entity.Board;
 import practice_server.domain.reply.entity.Reply;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Member extends BaseTimeEntity {
     @Id @GeneratedValue
     private Long memberId;
@@ -25,4 +28,10 @@ public class Member extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "member")
     private List<Reply> replies;
+
+    @Builder
+    public Member(String nickname, String password) {
+        this.nickname = nickname;
+        this.password = password;
+    }
 }
