@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import practice_server.domain.board.entity.Board;
 import practice_server.domain.board.repository.BoardRepository;
+import practice_server.domain.member.entity.Member;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,8 +24,11 @@ class BoardServiceTest {
         board.setTitle("안녕하세요~");
         board.setContent("반갑습니다");
 
+        Member member = new Member();
+        member.setNickname("test1");
+
         // when
-        Long id = boardService.save(board);
+        Long id = boardService.save(member.getMemberId(), board);
         Board getBoard = boardService.findOne(id);
 
         // then
@@ -38,7 +42,10 @@ class BoardServiceTest {
         board.setTitle("안녕하세요~");
         board.setContent("반갑습니다");
 
-        Long id = boardService.save(board);
+        Member member = new Member();
+        member.setNickname("test2");
+
+        Long id = boardService.save(member.getMemberId(), board);
 
         // when
         boardService.updateBoard(id, "수정타이틀", "수정콘텐츠");
@@ -55,7 +62,10 @@ class BoardServiceTest {
         board.setTitle("안녕하세요~");
         board.setContent("반갑습니다");
 
-        Long id = boardService.save(board);
+        Member member = new Member();
+        member.setNickname("test3");
+
+        Long id = boardService.save(member.getMemberId(), board);
 
         // when
         boardService.delete(id);

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import practice_server.domain.board.entity.Board;
 import practice_server.domain.board.repository.BoardRepository;
+import practice_server.domain.member.entity.Member;
+import practice_server.domain.member.repository.MemberRepository;
 
 import java.util.List;
 
@@ -13,6 +15,7 @@ import java.util.List;
 @Transactional
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
 
     // 게시글 상세 조회
     public Board findOne(Long id) {
@@ -25,7 +28,9 @@ public class BoardService {
     }
 
     // 게시글 등록
-    public Long save(Board board) {
+    public Long save(Long memberId, Board board) {
+        Member member = memberRepository.findMemberByMemberId(memberId);
+        board.setMember(member);
         boardRepository.save(board);
         return board.getBoardId();
     }
