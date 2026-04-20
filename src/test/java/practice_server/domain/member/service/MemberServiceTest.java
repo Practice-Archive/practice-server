@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import practice_server.domain.member.dto.CreateMemberRequest;
 import practice_server.domain.member.entity.Member;
 import practice_server.domain.member.repository.MemberRepository;
 
@@ -21,11 +22,9 @@ class MemberServiceTest {
 
     @Test
     public void join() throws Exception {
-        Member member1 = new Member();
-        member1.setNickname("lee");
-        member1.setPassword("12345");
+        CreateMemberRequest dto = new CreateMemberRequest("회원1", "1234");
 
-        Long memberId = memberService.join(member1);
+        Long memberId = memberService.join(dto);
         Member getMember = memberRepository.findMemberByMemberId(memberId);
 
         Assertions.assertThat(getMember.getNickname()).isEqualTo("lee");
@@ -33,14 +32,11 @@ class MemberServiceTest {
 
     @Test
     public void join2() throws Exception {
-        Member member1 = new Member();
-        member1.setNickname("lee");
+        CreateMemberRequest dto1 = new CreateMemberRequest("회원1", "1234");
+        CreateMemberRequest dto2 = new CreateMemberRequest("회원1", "1234");
 
-        Member member2 = new Member();
-        member2.setNickname("lee");
-
-        memberService.join(member1);
+        memberService.join(dto1);
         assertThrows(IllegalStateException.class,
-                () -> memberService.join(member2));
+                () -> memberService.join(dto2));
     }
 }

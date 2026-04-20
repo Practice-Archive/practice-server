@@ -16,10 +16,7 @@ public class MemberService {
     // 회원 가입
     public Long join(CreateMemberRequest dto) {
         validateDuplicateMember(dto);
-        Member member = Member.builder()
-                .nickname(dto.getNickname())
-                .password(dto.getPassword())
-                .build();
+        Member member = Member.createMember(dto.getNickname(), dto.getPassword());
         memberRepository.save(member);
         return member.getMemberId();
     }

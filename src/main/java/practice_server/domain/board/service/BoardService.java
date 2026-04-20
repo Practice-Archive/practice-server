@@ -3,10 +3,14 @@ package practice_server.domain.board.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import practice_server.domain.board.dto.BoardDetailResponse;
+import practice_server.domain.board.dto.CreateBoardRequest;
+import practice_server.domain.board.dto.BoardListResponse;
 import practice_server.domain.board.entity.Board;
 import practice_server.domain.board.repository.BoardRepository;
 import practice_server.domain.member.entity.Member;
 import practice_server.domain.member.repository.MemberRepository;
+import practice_server.domain.reply.dto.CommentResponse;
 
 import java.util.List;
 
@@ -18,19 +22,28 @@ public class BoardService {
     private final MemberRepository memberRepository;
 
     // 게시글 상세 조회
-    public Board findOne(Long id) {
-        return boardRepository.findBoardByBoardId(id);
+    public BoardDetailResponse findOne(Long id) {
+        Board board = boardRepository.findBoardByBoardId(id);
+
+        List<CommentResponse> replies = board.getReplies().stream()
+                .map(CommentResponse::from)
+                .toList();
+
+        return BoardDetailResponse.from(board, replies);
     }
 
     // 게시글 리스트 조회
-    public List<Board> findAll() {
-        return boardRepository.findAll();
+    public List<BoardListResponse> findAll() {
+        List<Board> boards = boardRepository.findAll();
+        return boards.stream()
+                .map(BoardListResponse::from)
+                .toList();
     }
 
     // 게시글 등록
-    public Long save(Long memberId, Board board) {
-        Member member = memberRepository.findMemberByMemberId(memberId);
-        board.setMember(member);
+    public Long save(CreateBoardRequest dto) {
+        Member member = memberRepository.findMemberByMemberId(dto.getMemberId());
+        Board board = Board.createBoard(member,dto.getTitle(),dto.getContent());
         boardRepository.save(board);
         return board.getBoardId();
     }
@@ -41,9 +54,9 @@ public class BoardService {
     }
 
     // 게시글 수정
-    public void updateBoard(Long id, String title, String content) {
+    public void update(Long id, CreateBoardRequest dto) {
         Board board = boardRepository.findBoardByBoardId(id);
-        board.setTitle(title);
-        board.setContent(content);
+        board.setTitle(dto.getTitle());
+        board.setContent(dto.getContent());
     }
 }

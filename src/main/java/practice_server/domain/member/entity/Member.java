@@ -12,6 +12,7 @@ import practice_server.domain.board.entity.Board;
 import practice_server.domain.reply.entity.Reply;
 import practice_server.global.common.BaseTimeEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,14 +25,21 @@ public class Member extends BaseTimeEntity {
     private String nickname;
 
     @OneToMany(mappedBy = "member")
-    private List<Board> boards;
+    private List<Board> boards = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Reply> replies;
+    private List<Reply> replies = new ArrayList<>();
 
     @Builder
-    public Member(String nickname, String password) {
+    private Member(String nickname, String password) {
         this.nickname = nickname;
         this.password = password;
+    }
+
+    public static Member createMember(String nickname, String password) {
+        return Member.builder()
+                .nickname(nickname)
+                .password(password)
+                .build();
     }
 }
