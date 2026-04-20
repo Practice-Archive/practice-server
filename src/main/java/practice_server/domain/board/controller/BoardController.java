@@ -38,6 +38,7 @@ public class BoardController {
     public void delete(@PathVariable("id") Long id) {
         boardService.delete(id);
     }
+
     // 게시글 수정
     @PatchMapping("/api/boards/{id}")
     public void update(@PathVariable("id") Long id, @RequestBody @Valid CreateBoardRequest request) {

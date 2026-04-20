@@ -11,6 +11,7 @@ import practice_server.domain.board.service.BoardService;
 import practice_server.domain.member.entity.Member;
 import practice_server.domain.member.service.MemberService;
 import practice_server.domain.reply.dto.CreateReplyRequest;
+import practice_server.domain.reply.dto.UpdateReplyRequest;
 import practice_server.domain.reply.entity.Reply;
 import practice_server.domain.reply.repository.ReplyRepository;
 
@@ -45,11 +46,12 @@ class ReplyServiceTest {
         Board board = new Board();
 
         CreateReplyRequest replyDTO = new CreateReplyRequest(member.getMemberId(), board.getBoardId(), "첫번째 댓글");
-
         Long id = replyService.save(replyDTO);
 
         // when
-        replyService.update(id, replyDTO);
+        UpdateReplyRequest updateDTO = new UpdateReplyRequest("첫번쨰 댓글 수정 입니다~~");
+
+        replyService.update(id, updateDTO);
 
         // then
         Reply getReply = replyRepository.findReplyByReplyId(id);

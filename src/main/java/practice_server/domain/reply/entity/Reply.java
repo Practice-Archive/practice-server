@@ -40,6 +40,7 @@ public class Reply extends BaseTimeEntity {
                 .content(content)
                 .build();
         member.getReplies().add(reply);
+        board.getReplies().add(reply);
         return reply;
     }
 }
