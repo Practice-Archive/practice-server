@@ -25,7 +25,7 @@ class BoardServiceTest {
 
         // when
         Long id = boardService.save(dto);
-        Board getBoard = boardService.findOne(id);
+        Board getBoard = boardRepository.findBoardByBoardId(id);
 
         // then
         Assertions.assertThat(dto.getContent()).isEqualTo(getBoard.getContent());
@@ -42,7 +42,7 @@ class BoardServiceTest {
         Long id = boardService.save(dto);
 
         // when
-        boardService.update(id, "수정타이틀", "수정콘텐츠");
+        boardService.update(id, dto);
 
         // then
         Board getBoard = boardRepository.findBoardByBoardId(id);

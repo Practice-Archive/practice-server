@@ -29,9 +29,17 @@ public class Board extends BaseTimeEntity {
     private List<Reply> replies;
 
     @Builder
-    public Board(Member member, String title, String content) {
+    private Board(Member member, String title, String content) {
         this.member = member;
         this.title = title;
         this.content = content;
+    }
+
+    public static Board createBoard(Member member, String title, String content) {
+        return Board.builder()
+                .member(member)
+                .title(title)
+                .content(content)
+                .build();
     }
 }
