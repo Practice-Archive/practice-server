@@ -10,6 +10,7 @@ import practice_server.domain.member.entity.Member;
 import practice_server.domain.reply.entity.Reply;
 import practice_server.global.common.BaseTimeEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,7 +27,7 @@ public class Board extends BaseTimeEntity {
     private String content;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-    private List<Reply> replies;
+    private List<Reply> replies = new ArrayList<>();
 
     @Builder
     private Board(Member member, String title, String content) {
@@ -36,10 +37,12 @@ public class Board extends BaseTimeEntity {
     }
 
     public static Board createBoard(Member member, String title, String content) {
-        return Board.builder()
+        Board board = Board.builder()
                 .member(member)
                 .title(title)
                 .content(content)
                 .build();
+        member.getBoards().add(board);
+        return board;
     }
 }

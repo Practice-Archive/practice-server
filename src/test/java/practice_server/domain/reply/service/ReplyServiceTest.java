@@ -10,6 +10,7 @@ import practice_server.domain.board.entity.Board;
 import practice_server.domain.board.service.BoardService;
 import practice_server.domain.member.entity.Member;
 import practice_server.domain.member.service.MemberService;
+import practice_server.domain.reply.dto.CreateReplyRequest;
 import practice_server.domain.reply.entity.Reply;
 import practice_server.domain.reply.repository.ReplyRepository;
 
@@ -26,12 +27,11 @@ class ReplyServiceTest {
         // given
         Member member = new Member();
         Board board = new Board();
-        Reply reply = new Reply();
+        CreateReplyRequest replyDTO = new CreateReplyRequest(member.getMemberId(), board.getBoardId(), "첫번째 댓글");
 
-        reply.setContent("첫번째 댓글입니다~~");
+        Long id = replyService.save(replyDTO);
 
         // when
-        Long id = replyService.save(member.getMemberId(), board.getBoardId(), reply);
         Reply getReply = replyRepository.findReplyByReplyId(id);
 
         // then
@@ -43,14 +43,13 @@ class ReplyServiceTest {
         // given
         Member member = new Member();
         Board board = new Board();
-        Reply reply = new Reply();
 
-        reply.setContent("첫번째 댓글입니다~~");
+        CreateReplyRequest replyDTO = new CreateReplyRequest(member.getMemberId(), board.getBoardId(), "첫번째 댓글");
 
-        Long id = replyService.save(member.getMemberId(), board.getBoardId(), reply);
+        Long id = replyService.save(replyDTO);
 
         // when
-        replyService.update(id, "첫번쨰 댓글 수정 입니다~~");
+        replyService.update(id, replyDTO);
 
         // then
         Reply getReply = replyRepository.findReplyByReplyId(id);
@@ -62,12 +61,9 @@ class ReplyServiceTest {
         // given
         Member member = new Member();
         Board board = new Board();
-        Reply reply = new Reply();
+        CreateReplyRequest replyDTO = new CreateReplyRequest(member.getMemberId(), board.getBoardId(), "첫번째 댓글");
 
-        reply.setContent("첫번째 댓글입니다~~");
-
-        Long id = replyService.save(member.getMemberId(), board.getBoardId(), reply);
-
+        Long id = replyService.save(replyDTO);
         // when
         replyService.delete(id);
 
