@@ -8,6 +8,7 @@ import practice_server.domain.board.repository.BoardRepository;
 import practice_server.domain.member.entity.Member;
 import practice_server.domain.member.repository.MemberRepository;
 import practice_server.domain.reply.dto.CreateReplyRequest;
+import practice_server.domain.reply.dto.UpdateReplyRequest;
 import practice_server.domain.reply.entity.Reply;
 import practice_server.domain.reply.repository.ReplyRepository;
 
@@ -30,7 +31,7 @@ public class ReplyService {
     }
 
     // 댓글 수정
-    public void update(Long id, CreateReplyRequest dto) {
+    public void update(Long id, UpdateReplyRequest dto) {
         Reply reply = replyRepository.findReplyByReplyId(id);
         reply.setContent(dto.getContent());
     }

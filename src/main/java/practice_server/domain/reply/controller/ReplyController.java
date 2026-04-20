@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import practice_server.domain.reply.dto.CreateReplyRequest;
 import practice_server.domain.reply.dto.CreateReplyResponse;
+import practice_server.domain.reply.dto.UpdateReplyRequest;
 import practice_server.domain.reply.service.ReplyService;
 
 @RestController
@@ -20,7 +21,7 @@ public class ReplyController {
 
     // 댓글 수정
     @PatchMapping("/api/replies/{id}")
-    public void update(@PathVariable("id") Long id, @RequestBody @Valid CreateReplyRequest request) {
+    public void update(@PathVariable("id") Long id, @RequestBody @Valid UpdateReplyRequest request) {
         replyService.update(id, request);
     }
 
