@@ -30,8 +30,15 @@ public class Member extends BaseTimeEntity {
     private List<Reply> replies;
 
     @Builder
-    public Member(String nickname, String password) {
+    private Member(String nickname, String password) {
         this.nickname = nickname;
         this.password = password;
+    }
+
+    public static Member createMember(String nickname, String password) {
+        return Member.builder()
+                .nickname(nickname)
+                .password(password)
+                .build();
     }
 }
