@@ -9,7 +9,7 @@ spring:
     password: ${DB_PASSWORD} # 도커 실행 시 설정한 MYSQL_ROOT_PASSWORD
   jpa:
     hibernate:
-      ddl-auto: create # 엔티티에 맞춰 테이블 자동 생성/수정
+      ddl-auto: update # 엔티티에 맞춰 테이블 자동 생성/수정
     show-sql: true     # 실행되는 SQL 쿼리를 로그로 출력
     properties:
       hibernate:

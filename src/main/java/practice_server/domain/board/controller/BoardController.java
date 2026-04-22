@@ -2,14 +2,16 @@ package practice_server.domain.board.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import practice_server.domain.board.dto.BoardDetailResponse;
 import practice_server.domain.board.dto.CreateBoardRequest;
 import practice_server.domain.board.dto.CreateBoardResponse;
 import practice_server.domain.board.dto.BoardListResponse;
 import practice_server.domain.board.service.BoardService;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,8 +20,10 @@ public class BoardController {
 
     // 게시글 목록 조회
     @GetMapping("/api/boards")
-    public List<BoardListResponse> findAll() {
-        return boardService.findAll();
+    public Page<BoardListResponse> findAll
+    (@PageableDefault(size = 10, sort = "boardId", direction = Sort.Direction.DESC)
+     Pageable pageable) {
+        return boardService.findAll(pageable);
     }
 
     // 게시글 조회
