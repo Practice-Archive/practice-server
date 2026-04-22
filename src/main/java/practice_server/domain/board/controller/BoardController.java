@@ -7,10 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-import practice_server.domain.board.dto.BoardDetailResponse;
-import practice_server.domain.board.dto.CreateBoardRequest;
-import practice_server.domain.board.dto.CreateBoardResponse;
-import practice_server.domain.board.dto.BoardListResponse;
+import practice_server.domain.board.dto.*;
 import practice_server.domain.board.service.BoardService;
 
 @RestController
@@ -20,10 +17,10 @@ public class BoardController {
 
     // 게시글 목록 조회
     @GetMapping("/api/boards")
-    public Page<BoardListResponse> findAll
+    public BoardPageResponse findAll
     (@PageableDefault(size = 10, sort = "boardId", direction = Sort.Direction.DESC)
      Pageable pageable) {
-        return boardService.findAll(pageable);
+        return BoardPageResponse.from(boardService.findAll(pageable));
     }
 
     // 게시글 조회
