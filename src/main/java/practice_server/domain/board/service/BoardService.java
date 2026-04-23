@@ -26,7 +26,6 @@ public class BoardService {
     // 게시글 상세 조회
     public BoardDetailResponse findOne(Long id) {
         Board board = boardRepository.findBoardByBoardId(id);
-
         List<CommentResponse> replies = board.getReplies().stream()
                 .map(CommentResponse::from)
                 .toList();
@@ -36,8 +35,7 @@ public class BoardService {
 
     // 게시글 리스트 조회
     public Page<BoardListResponse> findAll(Pageable pageable) {
-        return boardRepository.findAll(pageable)
-                .map(BoardListResponse::from);
+        return boardRepository.findBoardPage(pageable);
     }
 
     // 게시글 등록

@@ -1,20 +1,28 @@
 spring:
   config:
-    import: optional:file:.env[.properties]
+    import: "optional:file:.env[.properties]"
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    # mydb 부분은 도커 실행 시 설정한 MYSQL_DATABASE 이름과 일치해야 합니다.
     url: jdbc:mysql://localhost:3306/mydb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: ${DB_USERNAME}
-    password: ${DB_PASSWORD} # 도커 실행 시 설정한 MYSQL_ROOT_PASSWORD
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: update # 엔티티에 맞춰 테이블 자동 생성/수정
-    show-sql: true     # 실행되는 SQL 쿼리를 로그로 출력
+      ddl-auto: update
+    show-sql: true
     properties:
       hibernate:
-        format_sql: true # SQL 로그를 예쁘게 한 줄씩 정렬
-logging.level:
-  org.hibernate.SQL: debug
-  # 스프링 부트 3.x / Hibernate 6 기준 파라미터 로그 확인
-  org.hibernate.orm.jdbc.bind: trace;
+        format_sql: true
+        # 하이버네이트 6 이상에서 바인딩 파라미터를 로그에 남기는 설정
+        highlight_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    # 세미콜론(;)은 제거하고 한 줄씩 작성해야 합니다.
+    org.hibernate.orm.jdbc.bind: trace
+
+springdoc:
+  querydsl:
+    enabled: false # Querydsl 연동 에러 방지 핵심 설정
+  default-flat-param-object: true # 객체 파라미터를 평면화하여 Swagger에 표시 (권장)
