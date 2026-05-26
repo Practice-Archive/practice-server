@@ -1,6 +1,8 @@
 package practice_server.domain.board.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import practice_server.domain.board.dto.BoardDetailResponse;
@@ -24,7 +26,6 @@ public class BoardService {
     // 게시글 상세 조회
     public BoardDetailResponse findOne(Long id) {
         Board board = boardRepository.findBoardByBoardId(id);
-
         List<CommentResponse> replies = board.getReplies().stream()
                 .map(CommentResponse::from)
                 .toList();
@@ -33,11 +34,8 @@ public class BoardService {
     }
 
     // 게시글 리스트 조회
-    public List<BoardListResponse> findAll() {
-        List<Board> boards = boardRepository.findAll();
-        return boards.stream()
-                .map(BoardListResponse::from)
-                .toList();
+    public Page<BoardListResponse> findAll(Pageable pageable) {
+        return boardRepository.findBoardPage(pageable);
     }
 
     // 게시글 등록
